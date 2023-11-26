@@ -1,42 +1,42 @@
-import { Message, EmbedBuilder, ChannelType } from "discord.js";
-import { play } from "../functions/play";
-import { VoiceConnection, AudioPlayer, AudioPlayerStatus, joinVoiceChannel } from "@discordjs/voice";
-import ytdl from "ytdl-core";
-export let url: string;
+import { Message, EmbedBuilder, ChannelType } from "discord.js"
+import { play } from "../functions/play"
+import { VoiceConnection, AudioPlayer, AudioPlayerStatus, joinVoiceChannel } from "@discordjs/voice"
+import ytdl from "ytdl-core"
+export let url: string
 
 export async function playCommand(message: Message, queue: string[], connection: VoiceConnection | null, player: AudioPlayer) {
-    url = message.content.split(" ")[1];
-    const channel = message.member?.voice.channel;
+    url = message.content.split(" ")[1]
+    const channel = message.member?.voice.channel
     if (!url) {
-        message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "URLを指定してください" }).setColor("Red")] });
-        return;
+        message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "URLを指定してください" }).setColor("Red")] })
+        return
     }
     if (!ytdl.validateURL(url)) {
-        message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "無効なURLです。" }).setColor("Red")] });
-        return;
+        message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "無効なURLです。" }).setColor("Red")] })
+        return
     }
     if (!channel) {
         message.reply({
             embeds: [new EmbedBuilder().addFields({ name: "Error", value: "ボイスチャンネルに参加してから実行してください。" }).setColor("Red")],
-        });
-        return;
+        })
+        return
     }
-    if (channel.type !== ChannelType.GuildVoice) return;
+    if (channel.type !== ChannelType.GuildVoice) return
     if (!channel.joinable) {
         message.reply({
             embeds: [new EmbedBuilder().addFields({ name: "Error", value: "このチャンネルに参加できません。" }).setColor("Red")],
-        });
-        return;
+        })
+        return
     }
     if (!channel.speakable) {
         message.reply({
             embeds: [new EmbedBuilder().addFields({ name: "Error", value: "このチャンネルで喋れません。" }).setColor("Red")],
-        });
-        return;
+        })
+        return
     }
     if (queue.length > 0 || player.state.status === AudioPlayerStatus.Playing) {
-        queue.push(url);
-        const info = await ytdl.getInfo(url);
+        queue.push(url)
+        const info = await ytdl.getInfo(url)
         message.reply({
             embeds: [
                 new EmbedBuilder()
@@ -49,18 +49,18 @@ export async function playCommand(message: Message, queue: string[], connection:
                     .setImage(info.videoDetails.thumbnails[0].url.split("?")[0])
                     .setColor("Yellow"),
             ],
-        });
-        return;
+        })
+        return
     } else {
         if (!url) {
             message.reply({
                 embeds: [new EmbedBuilder().addFields({ name: "Error", value: "URLを指定してください。" }).setColor("Red")],
-            });
-            return;
+            })
+            return
         }
         if (!ytdl.validateURL(url)) {
-            message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "無効なURLです。" }).setColor("Red")] });
-            return;
+            message.reply({ embeds: [new EmbedBuilder().addFields({ name: "Error", value: "無効なURLです。" }).setColor("Red")] })
+            return
         }
         if (!connection) {
             connection = joinVoiceChannel({
@@ -69,11 +69,11 @@ export async function playCommand(message: Message, queue: string[], connection:
                 guildId: channel.guild.id,
                 selfDeaf: true,
                 selfMute: false,
-            });
+            })
         }
-        connection.subscribe(player);
-        play(url, player);
-        const info = await ytdl.getInfo(url);
+        connection.subscribe(player)
+        play(url, player)
+        const info = await ytdl.getInfo(url)
         message.reply({
             embeds: [
                 new EmbedBuilder()
@@ -86,6 +86,6 @@ export async function playCommand(message: Message, queue: string[], connection:
                     .setImage(info.videoDetails.thumbnails[0].url.split("?")[0])
                     .setColor("Green"),
             ],
-        });
+        })
     }
 }

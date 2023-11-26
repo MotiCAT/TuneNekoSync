@@ -10,8 +10,8 @@ export async function queueCommand(message: Message, queue: string[]): Promise<v
         .setTitle('Queue')
         .setColor('Blue')
         await Promise.all(queue.map(async (url, index) => {
-            const info = await ytdl.getInfo(url);
-            embed.addFields({ name: `${index + 1}. ${info.videoDetails.title}`, value: `[${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`});
+            const info = await ytdl.getInfo(url)
+            embed.addFields({ name: `${index + 1}. ${info.videoDetails.title}`, value: `[${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`})
         }))
         message.reply({ embeds: [embed] })
 }
