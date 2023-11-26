@@ -10,6 +10,7 @@ import { resumeCommand } from "../commands/resume"
 import { skipCommand } from "../commands/skip"
 import { stopCommand } from "../commands/stop"
 import { queueCommand } from "../commands/queue"
+import { helpCommand } from "../commands/help"
 
 
 const player = createAudioPlayer()
@@ -44,6 +45,9 @@ export async function onMessageCreate(message: Message, connection: VoiceConnect
             break
         case "queue":
             queueCommand(message, queue)
+            break
+        case "help":
+            helpCommand(message)
             break
         default:
             message.reply({ embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')] })
