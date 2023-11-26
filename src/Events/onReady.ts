@@ -15,5 +15,6 @@ export async function onReady(client: Client) {
 			'MB | ' +
 			(process.memoryUsage().rss / 1024 / 1024).toFixed(2) +
 			'MB'
+			// Quote from: https://github.com/Nich87/Faith
 	})
 }
