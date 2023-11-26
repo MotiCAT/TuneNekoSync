@@ -10,6 +10,6 @@ export async function play(url: string, player: AudioPlayer) {
         inputType: StreamType.WebmOpus,
         inlineVolume: true,
     })
-    resource.volume?.setVolume(0.03)
+    resource.volume?.setVolume(0.1)
     player.play(resource)
 }

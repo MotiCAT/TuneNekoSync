@@ -1,4 +1,5 @@
 import { VoiceState } from 'discord.js'
+import { queue } from './onMessageCreate'
 
 export async function onVoiceStateUpdate(oldState: VoiceState, newState: VoiceState) {
     console.log('VoiceStateUpdate')
@@ -9,5 +10,6 @@ export async function onVoiceStateUpdate(oldState: VoiceState, newState: VoiceSt
     if (channel && channel.members.size === 1 && channel.members.has(botId)) {
         console.log('a')
         newState.guild.members.me?.voice.disconnect()
+        queue.length = 0
     }
 }

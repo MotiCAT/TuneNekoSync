@@ -9,9 +9,6 @@ import { onVoiceStateUpdate } from './Events/onVoiceStateUpdate'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let connection: VoiceConnection | null
 
-
-
-
 config()
 
 const client = new Client({

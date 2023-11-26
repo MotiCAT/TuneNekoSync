@@ -5,16 +5,16 @@ import { PlayeronIdle } from "./playeronIdle"
 
 import { loopCommand } from "../commands/loop"
 import { pauseCommand } from "../commands/pause"
-import { playCommand } from "../commands/play"
+import { playCommand, url } from "../commands/play"
 import { resumeCommand } from "../commands/resume"
 import { skipCommand } from "../commands/skip"
 import { stopCommand } from "../commands/stop"
+import { queueCommand } from "../commands/queue"
+
 
 const player = createAudioPlayer()
 
-const isLooping = false
-const queue = <string[]>[]
-let url: string
+export const queue = <string[]>[]
 let nextUrl: string | undefined
 const prefix = "ts!"
 
@@ -25,13 +25,13 @@ export async function onMessageCreate(message: Message, connection: VoiceConnect
     if (!commandName) return
     switch (commandName) {
         case "loop":
-            loopCommand(message, isLooping)
+            loopCommand(message)
             break
         case "pause":
             pauseCommand(message, player)
             break
         case "play":
-            playCommand(message, url, queue, connection, player)
+            playCommand(message, queue, connection, player)
             break
         case "resume":
             resumeCommand(message, player)
@@ -42,9 +42,12 @@ export async function onMessageCreate(message: Message, connection: VoiceConnect
         case "stop":
             stopCommand(message, queue)
             break
+        case "queue":
+            queueCommand(message, queue)
+            break
         default:
             message.reply({ embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')] })
             break
     }
-    player.on(AudioPlayerStatus.Idle, () => PlayeronIdle(player, queue, nextUrl))
+    player.on(AudioPlayerStatus.Idle, () => PlayeronIdle(player, queue, nextUrl, url))
 }
