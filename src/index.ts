@@ -5,7 +5,6 @@ import { VoiceConnection } from '@discordjs/voice';
 import { Client, GatewayIntentBits, Message, VoiceState } from 'discord.js';
 import { config } from 'dotenv';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let connection: VoiceConnection | null;
 
 config();

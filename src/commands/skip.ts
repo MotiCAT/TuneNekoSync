@@ -7,10 +7,9 @@ export async function skipCommand(message: Message, queue: string[], nextUrl: st
 	if (queue.length > 0) {
 		nextUrl = queue.shift() ?? undefined;
 		if (!nextUrl) {
-			message.reply({
+			return message.reply({
 				embeds: [new EmbedBuilder().addFields({ name: 'Info', value: 'キューが空です。' }).setColor('Yellow')]
 			});
-			return;
 		}
 		play(nextUrl, player);
 		const info = await ytdl.getInfo(nextUrl);

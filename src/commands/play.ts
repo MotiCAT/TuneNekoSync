@@ -14,46 +14,41 @@ export async function playCommand(
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
 	if (!url) {
-		message.reply({
+		return message.reply({
 			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'URLを指定してください' }).setColor('Red')]
 		});
-		return;
 	}
 	if (!ytdl.validateURL(url)) {
-		message.reply({
+		return message.reply({
 			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red')]
 		});
-		return;
 	}
 	if (!channel) {
-		message.reply({
+		return message.reply({
 			embeds: [
 				new EmbedBuilder()
 					.addFields({ name: 'Error', value: 'ボイスチャンネルに参加してから実行してください。' })
 					.setColor('Red')
 			]
 		});
-		return;
 	}
 	if (channel.type !== ChannelType.GuildVoice) return;
 	if (!channel.joinable) {
-		message.reply({
+		return message.reply({
 			embeds: [
 				new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルに参加できません。' }).setColor('Red')
 			]
 		});
-		return;
 	}
 	if (!channel.speakable) {
-		message.reply({
+		return message.reply({
 			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red')]
 		});
-		return;
 	}
 	if (queue.length > 0 || player.state.status === AudioPlayerStatus.Playing) {
 		queue.push(url);
 		const info = await ytdl.getInfo(url);
-		message.reply({
+		return message.reply({
 			embeds: [
 				new EmbedBuilder()
 					.setTitle('Info')
@@ -66,19 +61,16 @@ export async function playCommand(
 					.setColor('Yellow')
 			]
 		});
-		return;
 	} else {
 		if (!url) {
-			message.reply({
+			return message.reply({
 				embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'URLを指定してください。' }).setColor('Red')]
 			});
-			return;
 		}
 		if (!ytdl.validateURL(url)) {
-			message.reply({
+			return message.reply({
 				embeds: [new EmbedBuilder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red')]
 			});
-			return;
 		}
 		if (!connection) {
 			connection = joinVoiceChannel({
