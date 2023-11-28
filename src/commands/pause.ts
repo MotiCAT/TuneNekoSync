@@ -8,8 +8,9 @@ export async function pauseCommand(message: Message, player: AudioPlayer) {
 			embeds: [new EmbedBuilder().addFields({ name: 'Success', value: '動画を一時停止しました。' }).setColor('Green')]
 		});
 	} else if (player.state.status === AudioPlayerStatus.Paused) {
+		player.unpause();
 		message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Info', value: '動画が一時停止されています。' }).setColor('Yellow')]
+			embeds: [new EmbedBuilder().addFields({ name: 'Success', value: '動画を再開しました。' }).setColor('Green')]
 		});
 	} else {
 		message.reply({
