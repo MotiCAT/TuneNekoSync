@@ -1,5 +1,5 @@
 {
-	"name": "chproducts",
+	"name": "tunenekosync",
 	"version": "1.0.1",
 	"description": "",
 	"main": "index.js",
@@ -13,7 +13,11 @@
 		"format": "prettier . --write",
 		"lint": "npm run format && eslint ."
 	},
-	"author": "MotiCAT",
+	"author": {
+		"name": "MotiCAT",
+		"email": "contact@moticat.net",
+		"url": "https://profile.moticat.net"
+	},
 	"license": "MIT",
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^6.12.0",
@@ -32,5 +36,16 @@
 		"ffmpeg-static": "^5.2.0",
 		"tweetnacl": "^1.0.3",
 		"ytdl-core": "^4.11.5"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MotiCAT/TuneNekoSync.git"
+	},
+	"contributors": [
+		{
+			"name": "Nich87",
+			"email": "Contact@VoidHacker.com",
+			"url": "https://VoidHacker.com"
+		}
+	]
 }
