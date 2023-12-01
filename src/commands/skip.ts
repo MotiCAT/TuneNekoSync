@@ -1,34 +1,15 @@
-import { play } from '../functions/play';
-import { AudioPlayer } from '@discordjs/voice';
+import { queueManager } from '../classes/queue';
+import { player } from './play';
 import { Message, EmbedBuilder } from 'discord.js';
-import ytdl from 'ytdl-core';
 
-export async function skipCommand(message: Message, queue: string[], nextUrl: string | undefined, player: AudioPlayer) {
-	if (queue.length > 0) {
-		nextUrl = queue.shift() ?? undefined;
-		if (!nextUrl) {
-			return message.reply({
-				embeds: [new EmbedBuilder().addFields({ name: 'Info', value: 'キューが空です。' }).setColor('Yellow')]
-			});
-		}
-		play(nextUrl, player);
-		const info = await ytdl.getInfo(nextUrl);
-		message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle('Success')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
-					.addFields({
-						name: info.videoDetails.title,
-						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
-					})
-					.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
-					.setColor('Green')
-			]
-		});
-	} else {
-		message.reply({
+export async function skipCommand(message: Message) {
+	if (typeof player === 'undefined') return message.reply({ content: '動画が再生されていません。' });
+	const queue = queueManager.queues.get(message.guildId!);
+
+	if (!queue?.store.length) {
+		return message.reply({
 			embeds: [new EmbedBuilder().addFields({ name: 'Info', value: 'キューが空です。' }).setColor('Yellow')]
 		});
 	}
+	player.skip();
 }
