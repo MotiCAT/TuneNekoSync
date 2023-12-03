@@ -12,12 +12,13 @@ export async function playCommand(message: Message) {
 		queueManager.setQueue(message.guild?.id as string, new Queue());
 	}
 	const queue = queueManager.getQueue(message.guild?.id as string) as Queue;
-
-	player = new YTPlayer(
-		message.guild?.id as string,
-		message.member?.voice.channel as VoiceBasedChannel,
-		message.channel.id
-	);
+	if (typeof player === 'undefined') {
+		player = new YTPlayer(
+			message.guild?.id as string,
+			message.member?.voice.channel as VoiceBasedChannel,
+			message.channel.id
+		);
+	}
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
 	if (!url)
