@@ -1,18 +1,19 @@
+import { Builder } from '../Utils/Builder';
 import { songResolver } from '../Utils/songResolver';
 import { Queue, queueManager } from '../classes/queue';
 import { player } from './play';
-import { Message, EmbedBuilder } from 'discord.js';
+import { Message } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export async function queueCommand(message: Message) {
 	if (typeof player === 'undefined') return message.reply({ content: '動画が再生されていません。' });
 	const queue = queueManager.getQueue(message.guildId!) as Queue;
 	if (!queue.length) {
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Info', value: 'キューが空です。' }).setColor('Yellow')]
-		});
+		return message.reply(
+			new Builder().addFields({ name: 'Info', value: 'キューが空です。' }).setColor('Yellow').build()
+		);
 	}
-	const embed = new EmbedBuilder().setTitle('Queue').setColor('Blue').setTimestamp();
+	const embed = new Builder().setTitle('Queue').setColor('Blue').setTimestamp();
 	for (let i = 0; i < queue.length; i++) {
 		const url = queue.store[i];
 		const info = await ytdl.getInfo(url);
@@ -25,5 +26,5 @@ export async function queueCommand(message: Message) {
 			text: `Queue: ${queue.store.length} songs`
 		});
 	}
-	message.reply({ embeds: [embed] });
+	message.reply(embed.build());
 }

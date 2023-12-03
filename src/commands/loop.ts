@@ -1,6 +1,7 @@
+import { Builder } from '../Utils/Builder';
 import { queueManager, Queue } from '../classes/queue';
 import { player } from './play';
-import { Message, EmbedBuilder } from 'discord.js';
+import { Message } from 'discord.js';
 
 export async function loopCommand(message: Message, args: string[]) {
 	if (typeof player === 'undefined') return message.reply({ content: '動画が再生されていません。' });
@@ -20,16 +21,12 @@ export async function loopCommand(message: Message, args: string[]) {
 				queue?.setLoop('track');
 				break;
 			default:
-				message.reply({
-					embeds: [
-						new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')
-					]
-				});
+				message.reply(
+					new Builder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red').build()
+				);
 				break;
 		}
 	}
 
-	message.reply({
-		embeds: [new EmbedBuilder().addFields({ name: 'Looping', value: queue.loop! }).setColor('Green')]
-	});
+	message.reply(new Builder().addFields({ name: 'Looping', value: queue.loop! }).setColor('Green').build());
 }

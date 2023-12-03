@@ -1,5 +1,5 @@
 import { format_count, seconds_to_time } from '../Utils/NumberUtil';
-import { EmbedBuilder } from 'discord.js';
+import { Builder } from './Builder';
 import ytdl from 'ytdl-core';
 
 export function songResolver(info: ytdl.videoInfo, requestedBy?: string, requestedByAvatar?: string) {
@@ -20,7 +20,7 @@ export async function getSongInfo(url: string) {
 	const info = await ytdl.getInfo(url);
 	const song = songResolver(info);
 
-	const embed = new EmbedBuilder()
+	const embed = new Builder()
 		.setTitle(song.title)
 		.setURL(song.url)
 		.setThumbnail(song.thumbnail)
@@ -31,5 +31,5 @@ export async function getSongInfo(url: string) {
 		)
 		.setColor('Green');
 
-	return { embeds: [embed] };
+	return embed.build();
 }

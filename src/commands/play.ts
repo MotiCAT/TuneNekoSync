@@ -1,6 +1,7 @@
+import { Builder } from '../Utils/Builder';
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
-import { Message, EmbedBuilder, ChannelType, VoiceBasedChannel } from 'discord.js';
+import { Message, ChannelType, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export let player: YTPlayer | undefined;
@@ -22,69 +23,62 @@ export async function playCommand(message: Message) {
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
 	if (!url)
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'URLを指定してください' }).setColor('Red')]
-		});
+		return message.reply(
+			new Builder().addFields({ name: 'Error', value: 'URLを指定してください' }).setColor('Red').build()
+		);
 
 	if (!ytdl.validateURL(url))
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red')]
-		});
+		return message.reply(new Builder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red').build());
 
 	if (!channel)
-		return message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.addFields({ name: 'Error', value: 'ボイスチャンネルに参加してから実行してください。' })
-					.setColor('Red')
-			]
-		});
+		return message.reply(
+			new Builder()
+				.addFields({ name: 'Error', value: 'ボイスチャンネルに参加してから実行してください。' })
+				.setColor('Red')
+				.build()
+		);
 
 	if (channel.type !== ChannelType.GuildVoice) return;
 	if (!channel.joinable)
-		return message.reply({
-			embeds: [
-				new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルに参加できません。' }).setColor('Red')
-			]
-		});
+		return message.reply(
+			new Builder().addFields({ name: 'Error', value: 'このチャンネルに参加できません。' }).setColor('Red').build()
+		);
 
 	if (!channel.speakable)
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red')]
-		});
+		return message.reply(
+			new Builder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red').build()
+		);
 
 	if (!queue.length || !player.isPlaying) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
-		message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle('Success')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
-					.addFields({
-						name: info.videoDetails.title,
-						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
-					})
-					.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
-					.setColor('Green')
-			]
-		});
+		message.reply(
+			new Builder()
+				.setTitle('Success')
+				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
+				.addFields({
+					name: info.videoDetails.title,
+					value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
+				})
+				.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
+				.setColor('Green')
+				.build()
+		);
 		if (queue.length === 1) return player.play();
 	} else {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
-		message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle('Info')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
-					.addFields({
-						name: info.videoDetails.title,
-						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
-					})
-					.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
-					.setColor('Yellow')
-			]
-		});
+		message.reply(
+			new Builder()
+				.setTitle('Info')
+				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
+				.addFields({
+					name: info.videoDetails.title,
+					value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
+				})
+				.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
+				.setColor('Yellow')
+				.build()
+		);
 	}
 }
