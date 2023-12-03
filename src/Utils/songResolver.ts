@@ -28,7 +28,8 @@ export async function getSongInfo(url: string) {
 			{ name: '投稿者', value: `[${song.author}](${song.authorUrl})` },
 			{ name: '再生時間', value: song.duration, inline: true },
 			{ name: '再生回数', value: song.views, inline: true }
-		);
+		)
+		.setColor('Green');
 
 	return { embeds: [embed] };
 }
