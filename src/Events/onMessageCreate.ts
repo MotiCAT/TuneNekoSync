@@ -1,13 +1,12 @@
 import { commands } from '../commands';
-import { Message, EmbedBuilder } from 'discord.js';
+import { Message, EmbedBuilder, Awaitable } from 'discord.js';
 
 const prefix = 'ts!';
 
-export async function onMessageCreate(message: Message) {
+export async function onMessageCreate(message: Message): Promise<Awaitable<void>> {
 	if (message.author.bot || !message.content.startsWith(prefix) || !message.guild) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/) as string[];
 	const commandName = args.shift()?.toLowerCase();
-	if (!commandName) return;
 
 	switch (commandName) {
 		case 'play':
@@ -43,7 +42,9 @@ export async function onMessageCreate(message: Message) {
 		default:
 			message.reply({
 				embeds: [
-					new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')
+					new EmbedBuilder()
+						.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
+						.setColor('Red')
 				]
 			});
 			break;
