@@ -53,7 +53,7 @@ export async function playCommand(message: Message) {
 			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red')]
 		});
 
-	if (!queue.length || player.isPlaying) {
+	if (!queue.length || !player.isPlaying) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply({
@@ -77,7 +77,7 @@ export async function playCommand(message: Message) {
 			embeds: [
 				new EmbedBuilder()
 					.setTitle('Info')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})キューに追加しました。**`)
+					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
 					.addFields({
 						name: info.videoDetails.title,
 						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
