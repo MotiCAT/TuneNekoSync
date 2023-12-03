@@ -1,13 +1,4 @@
-import { changeVolumeCommand } from '../commands/changeVolume';
-import { helpCommand } from '../commands/help';
-import { loopCommand } from '../commands/loop';
-import { nowplayingCommand } from '../commands/nowplaying';
-import { pauseCommand } from '../commands/pause';
-import { playCommand } from '../commands/play';
-import { queueCommand } from '../commands/queue';
-import { resumeCommand } from '../commands/resume';
-import { skipCommand } from '../commands/skip';
-import { stopCommand } from '../commands/stop';
+import { commands } from '../commands';
 import { Message, EmbedBuilder } from 'discord.js';
 
 const prefix = 'ts!';
@@ -20,34 +11,34 @@ export async function onMessageCreate(message: Message) {
 
 	switch (commandName) {
 		case 'play':
-			playCommand(message);
+			commands.play(message);
 			break;
 		case 'stop':
-			stopCommand(message);
+			commands.stop(message);
 			break;
 		case 'pause':
-			pauseCommand(message);
+			commands.pause(message);
 			break;
 		case 'resume':
-			resumeCommand(message);
+			commands.resume(message);
 			break;
 		case 'loop':
-			loopCommand(message, args);
+			commands.loop(message, args);
 			break;
 		case 'skip':
-			skipCommand(message);
+			commands.skip(message);
 			break;
 		case 'queue':
-			queueCommand(message);
+			commands.queue(message);
 			break;
 		case 'help':
-			helpCommand(message);
+			commands.help(message);
 			break;
 		case 'volume':
-			changeVolumeCommand(message);
+			commands.changeVolume(message);
 			break;
 		case 'nowplaying':
-			nowplayingCommand(message);
+			commands.nowplaying(message);
 			break;
 		default:
 			message.reply({
