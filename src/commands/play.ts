@@ -1,6 +1,6 @@
-import { Builder } from '../Utils/Builder';
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
+import { embeds } from '../embeds';
 import { Message, ChannelType, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
@@ -22,38 +22,18 @@ export async function playCommand(message: Message) {
 	}
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
-	if (!url)
-		return message.reply(
-			new Builder().addFields({ name: 'Error', value: 'URLを指定してください' }).setColor('Red').build()
-		);
-
-	if (!ytdl.validateURL(url))
-		return message.reply(new Builder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red').build());
-
-	if (!channel)
-		return message.reply(
-			new Builder()
-				.addFields({ name: 'Error', value: 'ボイスチャンネルに参加してから実行してください。' })
-				.setColor('Red')
-				.build()
-		);
-
+	if (!url) return message.reply(embeds.noUrl);
+	if (!ytdl.validateURL(url)) return message.reply(embeds.invaildUrl);
+	if (!channel) return message.reply(embeds.voiceChannelJoin);
 	if (channel.type !== ChannelType.GuildVoice) return;
-	if (!channel.joinable)
-		return message.reply(
-			new Builder().addFields({ name: 'Error', value: 'このチャンネルに参加できません。' }).setColor('Red').build()
-		);
-
-	if (!channel.speakable)
-		return message.reply(
-			new Builder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red').build()
-		);
+	if (!channel.joinable) return message.reply(embeds.voiceChannnelJoined);
+	if (!channel.speakable) return message.reply(embeds.voiceChannnelPermission);
 
 	if (!queue.length || !player.isPlaying) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply(
-			new Builder()
+			embeds.embed
 				.setTitle('Success')
 				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
 				.addFields({
@@ -69,7 +49,7 @@ export async function playCommand(message: Message) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply(
-			new Builder()
+			embeds.embed
 				.setTitle('Info')
 				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
 				.addFields({

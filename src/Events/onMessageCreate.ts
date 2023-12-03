@@ -1,5 +1,5 @@
-import { Builder } from '../Utils/Builder';
 import { commands } from '../commands';
+import { embeds } from '../embeds';
 import { Message, Awaitable } from 'discord.js';
 
 const prefix = 'ts!';
@@ -56,12 +56,7 @@ export async function onMessageCreate(message: Message): Promise<Awaitable<void>
 			commands.nowplaying(message);
 			break;
 		default:
-			message.reply(
-				new Builder()
-					.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
-					.setColor('Red')
-					.build()
-			);
+			message.reply(embeds.unknownCommand);
 			break;
 	}
 }
