@@ -1,9 +1,10 @@
 import { queueManager, Queue } from '../classes/queue';
+import { embeds } from '../embeds';
 import { player } from './play';
-import { Message, EmbedBuilder } from 'discord.js';
+import { Message } from 'discord.js';
 
 export async function loopCommand(message: Message, args: string[]) {
-	if (typeof player === 'undefined') return message.reply({ content: '動画が再生されていません。' });
+	if (typeof player === 'undefined') return message.reply(embeds.videoNotPlaying);
 	const queue = queueManager.queues.get(message.guildId!) as Queue;
 	args = args.filter((arg) => arg !== '');
 	if (args.length === 0) {
@@ -20,16 +21,10 @@ export async function loopCommand(message: Message, args: string[]) {
 				queue?.setLoop('track');
 				break;
 			default:
-				message.reply({
-					embeds: [
-						new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')
-					]
-				});
+				message.reply(embeds.commandNotFound);
 				break;
 		}
 	}
 
-	message.reply({
-		embeds: [new EmbedBuilder().addFields({ name: 'Looping', value: queue.loop! }).setColor('Green')]
-	});
+	message.reply(embeds.embed.addFields({ name: 'Looping', value: queue.loop! }).setColor('Green').build());
 }

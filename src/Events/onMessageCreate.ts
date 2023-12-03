@@ -1,5 +1,6 @@
 import { commands } from '../commands';
-import { Message, EmbedBuilder, Awaitable } from 'discord.js';
+import { embeds } from '../embeds';
+import { Message, Awaitable } from 'discord.js';
 
 const prefix = 'ts!';
 
@@ -55,13 +56,7 @@ export async function onMessageCreate(message: Message): Promise<Awaitable<void>
 			commands.nowplaying(message);
 			break;
 		default:
-			message.reply({
-				embeds: [
-					new EmbedBuilder()
-						.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
-						.setColor('Red')
-				]
-			});
+			message.reply(embeds.unknownCommand);
 			break;
 	}
 }

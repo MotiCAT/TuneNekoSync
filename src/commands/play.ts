@@ -1,6 +1,7 @@
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
-import { Message, EmbedBuilder, ChannelType, VoiceBasedChannel } from 'discord.js';
+import { embeds } from '../embeds';
+import { Message, ChannelType, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export let player: YTPlayer | undefined;
@@ -21,70 +22,43 @@ export async function playCommand(message: Message) {
 	}
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
-	if (!url)
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'URLを指定してください' }).setColor('Red')]
-		});
-
-	if (!ytdl.validateURL(url))
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: '無効なURLです。' }).setColor('Red')]
-		});
-
-	if (!channel)
-		return message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.addFields({ name: 'Error', value: 'ボイスチャンネルに参加してから実行してください。' })
-					.setColor('Red')
-			]
-		});
-
+	if (!url) return message.reply(embeds.noUrl);
+	if (!ytdl.validateURL(url)) return message.reply(embeds.invaildUrl);
+	if (!channel) return message.reply(embeds.voiceChannelJoin);
 	if (channel.type !== ChannelType.GuildVoice) return;
-	if (!channel.joinable)
-		return message.reply({
-			embeds: [
-				new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルに参加できません。' }).setColor('Red')
-			]
-		});
-
-	if (!channel.speakable)
-		return message.reply({
-			embeds: [new EmbedBuilder().addFields({ name: 'Error', value: 'このチャンネルで喋れません。' }).setColor('Red')]
-		});
+	if (!channel.joinable) return message.reply(embeds.voiceChannnelJoined);
+	if (!channel.speakable) return message.reply(embeds.voiceChannnelPermission);
 
 	if (!queue.length || !player.isPlaying) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
-		message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle('Success')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
-					.addFields({
-						name: info.videoDetails.title,
-						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
-					})
-					.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
-					.setColor('Green')
-			]
-		});
+		message.reply(
+			embeds.embed
+				.setTitle('Success')
+				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
+				.addFields({
+					name: info.videoDetails.title,
+					value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
+				})
+				.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
+				.setColor('Green')
+				.build()
+		);
 		if (queue.length === 1) return player.play();
 	} else {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
-		message.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle('Info')
-					.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
-					.addFields({
-						name: info.videoDetails.title,
-						value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
-					})
-					.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
-					.setColor('Yellow')
-			]
-		});
+		message.reply(
+			embeds.embed
+				.setTitle('Info')
+				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
+				.addFields({
+					name: info.videoDetails.title,
+					value: `投稿者: [${info.videoDetails.author.name}](${info.videoDetails.author.channel_url})`
+				})
+				.setImage(info.videoDetails.thumbnails[0].url.split('?')[0])
+				.setColor('Yellow')
+				.build()
+		);
 	}
 }
