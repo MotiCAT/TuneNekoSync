@@ -11,5 +11,5 @@ export async function onVoiceStateUpdate(oldState: VoiceState, newState: VoiceSt
 		queueManager.deleteQueue(newState.guild.id);
 	}
 
-	if (!queueManager.getQueue(newState.guild.id)) queueManager.setQueue(newState.guild.id, new Queue<string>());
+	if (!queueManager.getQueue(newState.guild.id)) queueManager.setQueue(newState.guild.id, new Queue());
 }

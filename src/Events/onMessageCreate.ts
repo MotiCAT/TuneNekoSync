@@ -1,50 +1,65 @@
-import { helpCommand } from '../commands/help';
-import { loopCommand } from '../commands/loop';
-import { pauseCommand } from '../commands/pause';
-import { playCommand } from '../commands/play';
-import { queueCommand } from '../commands/queue';
-import { resumeCommand } from '../commands/resume';
-import { skipCommand } from '../commands/skip';
-import { stopCommand } from '../commands/stop';
-import { Message, EmbedBuilder } from 'discord.js';
+import { commands } from '../commands';
+import { Message, EmbedBuilder, Awaitable } from 'discord.js';
 
 const prefix = 'ts!';
 
-export async function onMessageCreate(message: Message) {
+export async function onMessageCreate(message: Message): Promise<Awaitable<void>> {
 	if (message.author.bot || !message.content.startsWith(prefix) || !message.guild) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/) as string[];
 	const commandName = args.shift()?.toLowerCase();
-	if (!commandName) return;
 
 	switch (commandName) {
 		case 'play':
-			playCommand(message);
+		case 'p':
+			commands.play(message);
 			break;
 		case 'stop':
-			stopCommand(message);
+		case 'leave':
+			commands.stop(message);
 			break;
 		case 'pause':
-			pauseCommand(message);
+			commands.pause(message);
 			break;
 		case 'resume':
-			resumeCommand(message);
+		case 'continue':
+		case 're':
+			commands.resume(message);
 			break;
 		case 'loop':
-			loopCommand(message, args);
+		case 'repeat':
+		case 'l':
+			commands.loop(message, args);
 			break;
 		case 'skip':
-			skipCommand(message);
+		case 's':
+		case 'next':
+			commands.skip(message);
 			break;
 		case 'queue':
-			queueCommand(message);
+		case 'q':
+		case 'list':
+			commands.queue(message);
 			break;
 		case 'help':
-			helpCommand(message);
+		case 'h':
+			commands.help(message);
+			break;
+		case 'volume':
+		case 'vol':
+		case 'v':
+			commands.changeVolume(message);
+			break;
+		case 'nowplaying':
+		case 'np':
+		case 'current':
+			commands.nowplaying(message);
 			break;
 		default:
 			message.reply({
 				embeds: [
-					new EmbedBuilder().addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' }).setColor('Red')
+					new EmbedBuilder()
+						.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
+						.setColor('Red')
 				]
 			});
 			break;

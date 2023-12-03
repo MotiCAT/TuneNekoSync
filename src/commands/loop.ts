@@ -1,13 +1,13 @@
-import { queueManager } from '../classes/queue';
+import { queueManager, Queue } from '../classes/queue';
 import { player } from './play';
 import { Message, EmbedBuilder } from 'discord.js';
 
 export async function loopCommand(message: Message, args: string[]) {
 	if (typeof player === 'undefined') return message.reply({ content: '動画が再生されていません。' });
-	const queue = queueManager.queues.get(message.guildId!);
+	const queue = queueManager.queues.get(message.guildId!) as Queue;
 	args = args.filter((arg) => arg !== '');
 	if (args.length === 0) {
-		queue?.loop === 'none' ? queue?.setLoop('queue') : queue?.setLoop('none');
+		queue.loop === 'none' ? queue.setLoop('queue') : queue.setLoop('none');
 	} else if (args.length === 1) {
 		switch (args[0]) {
 			case 'none':
@@ -30,6 +30,6 @@ export async function loopCommand(message: Message, args: string[]) {
 	}
 
 	message.reply({
-		embeds: [new EmbedBuilder().addFields({ name: 'Looping', value: queue?.loop! }).setColor('Green')]
+		embeds: [new EmbedBuilder().addFields({ name: 'Looping', value: queue.loop! }).setColor('Green')]
 	});
 }

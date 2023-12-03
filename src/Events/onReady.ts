@@ -1,6 +1,6 @@
 import { Client, version } from 'discord.js';
 
-export async function onReady(client: Client) {
+export function onReady(client: Client) {
 	console.log(`Logged in as ${client.user?.tag}`);
 	client.user?.setActivity('CatHouse Products');
 	console.table({
