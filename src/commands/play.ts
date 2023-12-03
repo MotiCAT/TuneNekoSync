@@ -1,4 +1,5 @@
-import { Queue, queueManager, YTPlayer } from '../classes/queue';
+import { YTPlayer } from '../classes/player';
+import { Queue, queueManager } from '../classes/queue';
 import { Message, EmbedBuilder, ChannelType, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
