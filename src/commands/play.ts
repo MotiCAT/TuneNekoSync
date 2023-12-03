@@ -11,7 +11,7 @@ export async function playCommand(message: Message) {
 	if (typeof queueManager.getQueue(message.guild?.id as string) === 'undefined') {
 		queueManager.setQueue(message.guild?.id as string, new Queue());
 	}
-	const queue = queueManager.getQueue(message.guild?.id as string)?.store as string[];
+	const queue = queueManager.getQueue(message.guild?.id as string) as Queue;
 
 	player = new YTPlayer(message.guild?.id as string, message.member?.voice.channel as VoiceBasedChannel);
 	url = message.content.split(' ')[1];
@@ -49,7 +49,7 @@ export async function playCommand(message: Message) {
 		});
 
 	if (!queue.length || player.isPlaying) {
-		queue.push(url);
+		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply({
 			embeds: [
@@ -66,7 +66,7 @@ export async function playCommand(message: Message) {
 		});
 		if (queue.length === 1) return player.play();
 	} else {
-		queue.push(url);
+		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply({
 			embeds: [

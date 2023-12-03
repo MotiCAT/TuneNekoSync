@@ -10,14 +10,14 @@ import { skipCommand } from './skip';
 import { stopCommand } from './stop';
 
 export const commands = {
-  changeVolume: changeVolumeCommand,
-  help: helpCommand,
-  loop: loopCommand,
-  nowplaying: nowplayingCommand,
-  pause: pauseCommand,
-  play: playCommand,
-  queue: queueCommand,
-  resume: resumeCommand,
-  skip: skipCommand,
-  stop: stopCommand
+	changeVolume: changeVolumeCommand,
+	help: helpCommand,
+	loop: loopCommand,
+	nowplaying: nowplayingCommand,
+	pause: pauseCommand,
+	play: playCommand,
+	queue: queueCommand,
+	resume: resumeCommand,
+	skip: skipCommand,
+	stop: stopCommand
 };

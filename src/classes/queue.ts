@@ -1,6 +1,6 @@
 import { Snowflake } from 'discord.js';
 
-export class Queue<T> {
+export class Queue {
 	private _store: string[];
 	public loop: 'none' | 'queue' | 'track';
 
@@ -53,21 +53,21 @@ export class Queue<T> {
 	}
 }
 class QueueManager {
-	private _queues: Map<Snowflake, Queue<string>>;
+	private _queues: Map<Snowflake, Queue>;
 
 	constructor() {
 		this._queues = new Map();
 	}
 
-	public get queues(): Map<Snowflake, Queue<string>> {
+	public get queues(): Map<Snowflake, Queue> {
 		return this._queues;
 	}
 
-	public getQueue(serverId: Snowflake): Queue<string> | undefined {
+	public getQueue(serverId: Snowflake): Queue | undefined {
 		return this._queues.get(serverId);
 	}
 
-	public setQueue(serverId: Snowflake, queue: Queue<string>): void {
+	public setQueue(serverId: Snowflake, queue: Queue): void {
 		this._queues.set(serverId, queue);
 	}
 

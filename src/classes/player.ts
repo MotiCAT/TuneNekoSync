@@ -9,7 +9,7 @@ export class YTPlayer {
 	private connection: import('@discordjs/voice').VoiceConnection;
 	public player: import('@discordjs/voice').AudioPlayer;
 	public serverId: Snowflake;
-	public queue: Queue<string>;
+	public queue: Queue;
 	public volume: number;
 	public isPlaying: boolean;
 	public resource: import('@discordjs/voice').AudioResource | null;
@@ -24,7 +24,7 @@ export class YTPlayer {
 			selfMute: false
 		});
 		this.player = createAudioPlayer();
-		this.queue = queueManager.getQueue(serverId) as Queue<string>;
+		this.queue = queueManager.getQueue(serverId) as Queue;
 		this.volume = 100 / 10;
 		this.player
 			.on('subscribe', () => {
