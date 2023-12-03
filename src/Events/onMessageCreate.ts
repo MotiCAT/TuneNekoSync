@@ -1,5 +1,7 @@
+import { changeVolumeCommand } from '../commands/changeVolume';
 import { helpCommand } from '../commands/help';
 import { loopCommand } from '../commands/loop';
+import { nowplayingCommand } from '../commands/nowplaying';
 import { pauseCommand } from '../commands/pause';
 import { playCommand } from '../commands/play';
 import { queueCommand } from '../commands/queue';
@@ -40,6 +42,12 @@ export async function onMessageCreate(message: Message) {
 			break;
 		case 'help':
 			helpCommand(message);
+			break;
+		case 'volume':
+			changeVolumeCommand(message);
+			break;
+		case 'nowplaying':
+			nowplayingCommand(message);
 			break;
 		default:
 			message.reply({

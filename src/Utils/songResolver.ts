@@ -1,4 +1,5 @@
 import { format_count, seconds_to_time } from '../Utils/NumberUtil';
+import { EmbedBuilder } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export function songResolver(info: ytdl.videoInfo, requestedBy?: string, requestedByAvatar?: string) {
@@ -13,4 +14,21 @@ export function songResolver(info: ytdl.videoInfo, requestedBy?: string, request
 		requestedBy: requestedBy ?? '',
 		requestedByAvatar: requestedByAvatar ?? ''
 	};
+}
+
+export async function getSongInfo(url: string) {
+	const info = await ytdl.getInfo(url);
+	const song = songResolver(info);
+
+	const embed = new EmbedBuilder()
+		.setTitle(song.title)
+		.setURL(song.url)
+		.setThumbnail(song.thumbnail)
+		.addFields(
+			{ name: '投稿者', value: `[${song.author}](${song.authorUrl})` },
+			{ name: '再生時間', value: song.duration, inline: true },
+			{ name: '再生回数', value: song.views, inline: true }
+		);
+
+	return { embeds: [embed] };
 }
