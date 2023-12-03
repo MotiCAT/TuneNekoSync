@@ -6,9 +6,10 @@ import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export async function queueCommand(interaction: ChatInputCommandInteraction) {
-	if (typeof player === 'undefined') return interaction.reply(embeds.videoNotPlaying);
+	await interaction.deferReply();
+	if (typeof player === 'undefined') return interaction.followUp(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(interaction.guildId!) as Queue;
-	if (!queue.length) return interaction.reply(embeds.queueEmpty);
+	if (!queue.length) return interaction.followUp(embeds.queueEmpty);
 
 	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();
 	for (let i = 0; i < queue.length; i++) {
@@ -23,5 +24,5 @@ export async function queueCommand(interaction: ChatInputCommandInteraction) {
 			text: `Queue: ${queue.store.length} songs`
 		});
 	}
-	interaction.reply(embed.build());
+	interaction.followUp(embed.build());
 }
