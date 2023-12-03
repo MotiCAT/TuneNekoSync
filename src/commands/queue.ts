@@ -10,11 +10,11 @@ export async function queueCommand(message: Message) {
 	const queue = queueManager.getQueue(message.guildId!) as Queue;
 	if (!queue.length) return message.reply(embeds.queueEmpty);
 
-	const embed = embeds.embed.setTitle('Queue').setColor('Blue').setTimestamp();
+	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();
 	for (let i = 0; i < queue.length; i++) {
 		const url = queue.store[i];
 		const info = await ytdl.getInfo(url);
-		const song = songResolver(info, message.author.username, message.author.avatarURL()!);
+		const song = songResolver(info, message.author.username, message.author.displayAvatarURL()!);
 		embed.addFields({
 			name: `${i + 1}. ${song.title}`,
 			value: `[${song.author}](${song.authorUrl})`

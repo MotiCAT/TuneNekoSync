@@ -26,5 +26,5 @@ export async function loopCommand(message: Message, args: string[]) {
 		}
 	}
 
-	message.reply(embeds.embed.addFields({ name: 'Looping', value: queue.loop! }).setColor('Green').build());
+	message.reply(new embeds.embed().addFields({ name: 'Looping', value: queue.loop! }).setColor('Green').build());
 }

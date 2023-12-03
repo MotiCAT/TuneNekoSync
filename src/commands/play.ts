@@ -33,7 +33,7 @@ export async function playCommand(message: Message) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply(
-			embeds.embed
+			new embeds.embed()
 				.setTitle('Success')
 				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})を再生します。**`)
 				.addFields({
@@ -49,7 +49,7 @@ export async function playCommand(message: Message) {
 		queue.addSong(url);
 		const info = await ytdl.getInfo(url);
 		message.reply(
-			embeds.embed
+			new embeds.embed()
 				.setTitle('Info')
 				.setDescription(`**[${info.videoDetails.title}](${info.videoDetails.video_url})をキューに追加しました。**`)
 				.addFields({

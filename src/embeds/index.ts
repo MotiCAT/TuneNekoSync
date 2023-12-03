@@ -1,7 +1,7 @@
 import { Builder } from '../Utils/Builder';
 
 export const embeds = {
-	embed: new Builder(),
+	embed: Builder,
 	help: new Builder()
 		.setTitle('Help')
 		.setColor('Blue')
