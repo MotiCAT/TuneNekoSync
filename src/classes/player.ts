@@ -12,6 +12,7 @@ export class YTPlayer {
 	public queue: Queue<string>;
 	public volume: number;
 	public isPlaying: boolean;
+	public resource: import('@discordjs/voice').AudioResource | null;
 	constructor(serverId: Snowflake, voiceChannel: VoiceBasedChannel) {
 		this.isPlaying = false;
 		this.serverId = serverId;
@@ -33,6 +34,7 @@ export class YTPlayer {
 				this.isPlaying = false;
 			})
 			.on(AudioPlayerStatus.Idle, () => this.playNextSong());
+		this.resource = null;
 	}
 
 	public play() {
@@ -42,13 +44,13 @@ export class YTPlayer {
 			quality: 'highest',
 			highWaterMark: 32 * 1024 * 1024
 		});
-		const resource = createAudioResource(stream, {
+		this.resource = createAudioResource(stream, {
 			inputType: StreamType.WebmOpus,
 			inlineVolume: true
 		});
-		resource.volume?.setVolume(0.1);
+		this.resource.volume?.setVolume(0.1);
 		this.connection.subscribe(this.player);
-		this.player.play(resource);
+		this.player.play(this.resource);
 	}
 
 	public pause(): void {
@@ -71,7 +73,8 @@ export class YTPlayer {
 	}
 
 	public changeVolume(volume: number): void {
-		this.volume = volume / 10;
+		if (!this.resource) return;
+		this.resource.volume?.setVolume(volume / 10);
 	}
 
 	private playNextSong(): void {

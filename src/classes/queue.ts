@@ -17,6 +17,10 @@ export class Queue<T> {
 		return this._store[0] ?? undefined;
 	}
 
+	public get length(): number {
+		return this._store.length;
+	}
+
 	public addSong(url: string): void {
 		this._store.push(url);
 	}
