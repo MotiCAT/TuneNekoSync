@@ -1,3 +1,5 @@
+import { getSongInfo } from '../Utils/songResolver';
+import { client } from '../index';
 import type { Queue } from './queue';
 import { queueManager } from './queue';
 import { joinVoiceChannel, createAudioPlayer } from '@discordjs/voice';
@@ -9,13 +11,15 @@ export class YTPlayer {
 	private connection: import('@discordjs/voice').VoiceConnection;
 	public player: import('@discordjs/voice').AudioPlayer;
 	public serverId: Snowflake;
+	public messageChannelId: Snowflake;
 	public queue: Queue;
 	public volume: number;
 	public isPlaying: boolean;
 	public resource: import('@discordjs/voice').AudioResource | null;
-	constructor(serverId: Snowflake, voiceChannel: VoiceBasedChannel) {
+	constructor(serverId: Snowflake, voiceChannel: VoiceBasedChannel, messageChannelId: Snowflake) {
 		this.isPlaying = false;
 		this.serverId = serverId;
+		this.messageChannelId = messageChannelId;
 		this.connection = joinVoiceChannel({
 			adapterCreator: voiceChannel.guild.voiceAdapterCreator,
 			channelId: voiceChannel.id,
@@ -77,7 +81,7 @@ export class YTPlayer {
 		this.resource.volume?.setVolume(volume / 10);
 	}
 
-	private playNextSong(): void {
+	private async playNextSong(): Promise<void> {
 		if (this.queue.loop === 'none') {
 			if (!this.queue.store.length) return;
 			else {
@@ -86,11 +90,19 @@ export class YTPlayer {
 					this.play();
 					return this.queue.removeSong(0);
 				}
+				await this.fetchSongData();
 				return this.play();
 			}
 		}
 		if (this.queue.loop === 'queue') this.queue.loopQueue();
 		if (this.queue.loop === 'track') this.queue.loopTrack();
 		this.play();
+		await this.fetchSongData();
+	}
+
+	private async fetchSongData() {
+		const channel = client.channels.cache.get(this.messageChannelId);
+		if (!channel) return;
+		if (channel.isTextBased()) channel.send(await getSongInfo(this.queue.currentSong!));
 	}
 }

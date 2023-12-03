@@ -13,7 +13,11 @@ export async function playCommand(message: Message) {
 	}
 	const queue = queueManager.getQueue(message.guild?.id as string) as Queue;
 
-	player = new YTPlayer(message.guild?.id as string, message.member?.voice.channel as VoiceBasedChannel);
+	player = new YTPlayer(
+		message.guild?.id as string,
+		message.member?.voice.channel as VoiceBasedChannel,
+		message.channel.id
+	);
 	url = message.content.split(' ')[1];
 	const channel = message.member?.voice.channel;
 	if (!url)
