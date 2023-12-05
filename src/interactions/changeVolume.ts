@@ -1,7 +1,8 @@
-import { player } from './play';
+import { client } from '../index';
 import { ChatInputCommandInteraction } from 'discord.js';
 
 export async function changeVolumeCommand(interaction: ChatInputCommandInteraction) {
+	const player = client?.player;
 	if (typeof player === 'undefined') return interaction.reply({ content: '動画が再生されていません。' });
 	const number = interaction.options.getNumber('volume');
 	if (!number) return interaction.reply({ content: `現在の音量は${player.volume}です。` });
