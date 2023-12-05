@@ -7,7 +7,7 @@ export async function stopCommand(message: Message): Promise<void> {
 		message.guild.members.me.voice.disconnect();
 		message.reply(embeds.videoStopped);
 	} else {
-		message.reply(embeds.voiceChannelJoin);
+		message.reply(embeds.videoNotPlaying);
 	}
 
 	queueManager.queues.delete(message.guildId!);
