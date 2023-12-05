@@ -1,7 +1,7 @@
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
 import { embeds } from '../embeds';
-import { Message, ChannelType, VoiceBasedChannel } from 'discord.js';
+import { Message, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export let player: YTPlayer | undefined;
@@ -21,13 +21,8 @@ export async function playCommand(message: Message) {
 		);
 	}
 	url = message.content.split(' ')[1];
-	const channel = message.member?.voice.channel;
 	if (!url) return message.reply(embeds.noUrl);
 	if (!ytdl.validateURL(url)) return message.reply(embeds.invaildUrl);
-	if (!channel) return message.reply(embeds.voiceChannelJoin);
-	if (channel.type !== ChannelType.GuildVoice) return;
-	if (!channel.joinable) return message.reply(embeds.voiceChannnelJoined);
-	if (!channel.speakable) return message.reply(embeds.voiceChannnelPermission);
 
 	if (!queue.length || !player.isPlaying) {
 		queue.addSong(url);
