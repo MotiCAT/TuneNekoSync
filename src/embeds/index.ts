@@ -43,7 +43,6 @@ export const embeds = {
 		.addFields({ name: 'Error', value: 'ボイスチャンネルに既に参加しています。' })
 		.setColor('Red')
 		.build(),
-	queueEmpty: new Builder().addFields({ name: 'Error', value: 'キューが空です。' }).setColor('Red').build(),
 	unknownCommand: new Builder()
 		.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
 		.setColor('Red')

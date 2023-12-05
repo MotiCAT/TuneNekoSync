@@ -9,7 +9,6 @@ export async function queueCommand(message: Message) {
 	const player = client?.player;
 	if (typeof player === 'undefined') return message.reply(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(message.guildId!) as Queue;
-	if (!queue.length) return message.reply(embeds.queueEmpty);
 
 	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();
 	for (let i = 0; i < queue.length; i++) {

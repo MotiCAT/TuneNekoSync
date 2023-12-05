@@ -8,7 +8,6 @@ export async function nowplayingCommand(interaction: ChatInputCommandInteraction
 	const player = client?.player;
 	if (typeof player === 'undefined') return interaction.reply(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(interaction.guild?.id as string) as Queue;
-	if (!queue.currentSong) return interaction.reply(embeds.queueEmpty);
 	const info = await getSongInfo(queue.currentSong);
 	return interaction.reply(info);
 }

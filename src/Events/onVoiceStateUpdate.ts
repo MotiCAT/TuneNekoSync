@@ -1,5 +1,5 @@
-import { client } from '../index';
 import { Queue, queueManager } from '../classes/queue';
+import { client } from '../index';
 import { VoiceState } from 'discord.js';
 
 export async function onVoiceStateUpdate(oldState: VoiceState, newState: VoiceState) {
