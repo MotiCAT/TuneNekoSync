@@ -2,7 +2,8 @@ import { onInteractionCreate } from './Events/onInteractionCreate';
 import { onMessageCreate } from './Events/onMessageCreate';
 import { onReady } from './Events/onReady';
 import { onVoiceStateUpdate } from './Events/onVoiceStateUpdate';
-import { BaseInteraction, Client, GatewayIntentBits, Message, VoiceState } from 'discord.js';
+import { extendedClient as Client } from './Utils/extendedClient';
+import { BaseInteraction, GatewayIntentBits, Message, VoiceState } from 'discord.js';
 import { config } from 'dotenv';
 
 config();
