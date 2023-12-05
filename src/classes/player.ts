@@ -66,13 +66,11 @@ export class YTPlayer {
 	}
 
 	public stop(): void {
-		this.player.stop();
 		this.connection.destroy();
 		queueManager.deleteQueue(this.serverId);
 	}
 
-	skip(): void {
-		this.player.stop();
+	public skip(): void {
 		this.playNextSong();
 	}
 
