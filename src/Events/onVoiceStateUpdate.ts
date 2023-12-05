@@ -1,3 +1,4 @@
+import { client } from '../index';
 import { Queue, queueManager } from '../classes/queue';
 import { VoiceState } from 'discord.js';
 
@@ -8,6 +9,7 @@ export async function onVoiceStateUpdate(oldState: VoiceState, newState: VoiceSt
 
 	if (channel && channel.members.size === 1 && channel.members.has(botId)) {
 		newState.guild.members.me?.voice.disconnect();
+		client.player = undefined;
 		queueManager.deleteQueue(newState.guild.id);
 	}
 
