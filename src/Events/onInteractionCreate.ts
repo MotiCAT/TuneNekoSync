@@ -1,6 +1,6 @@
 import { embeds } from '../embeds';
 import { interactions } from '../interactions';
-import { BaseInteraction, Awaitable } from 'discord.js';
+import { BaseInteraction, Awaitable, ChannelType, GuildMember } from 'discord.js';
 
 export async function onInteractionCreate(interaction: BaseInteraction): Promise<Awaitable<void>> {
 	if (!interaction.isChatInputCommand()) return;
@@ -8,6 +8,22 @@ export async function onInteractionCreate(interaction: BaseInteraction): Promise
 		interaction.reply({ content: 'This command can only be used in a server!', ephemeral: true });
 	}
 	const commandName = interaction.commandName;
+	if (commandName === 'help') return interactions.help(interaction);
+	if (!(interaction.member instanceof GuildMember)) return;
+	const channel = interaction.member?.voice.channel;
+	if (!channel) {
+		interaction.reply(embeds.voiceChannelJoin);
+		return;
+	}
+	if (channel.type !== ChannelType.GuildVoice) return;
+	if (!channel.joinable) {
+		interaction.reply(embeds.voiceChannnelJoined);
+		return;
+	}
+	if (!channel.speakable) {
+		interaction.reply(embeds.voiceChannnelPermission);
+		return;
+	}
 
 	switch (commandName) {
 		case 'play':
@@ -30,9 +46,6 @@ export async function onInteractionCreate(interaction: BaseInteraction): Promise
 			break;
 		case 'queue':
 			interactions.queue(interaction);
-			break;
-		case 'help':
-			interactions.help(interaction);
 			break;
 		case 'volume':
 			interactions.changeVolume(interaction);
