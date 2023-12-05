@@ -1,24 +1,25 @@
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
 import { embeds } from '../embeds';
+import { client } from '../index';
 import { Message, VoiceBasedChannel } from 'discord.js';
 import ytdl from 'ytdl-core';
 
-export let player: YTPlayer | undefined;
-
-export let url: string;
+let url: string;
 
 export async function playCommand(message: Message) {
+	let player = client?.player;
 	if (typeof queueManager.getQueue(message.guild?.id as string) === 'undefined') {
 		queueManager.setQueue(message.guild?.id as string, new Queue());
 	}
 	const queue = queueManager.getQueue(message.guild?.id as string) as Queue;
 	if (typeof player === 'undefined') {
-		player = new YTPlayer(
+		client.player = new YTPlayer(
 			message.guild?.id as string,
 			message.member?.voice.channel as VoiceBasedChannel,
 			message.channel.id
 		);
+		player = client.player;
 	}
 	url = message.content.split(' ')[1];
 	if (!url) return message.reply(embeds.noUrl);

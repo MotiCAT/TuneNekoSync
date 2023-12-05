@@ -1,11 +1,12 @@
 import { songResolver } from '../Utils/songResolver';
 import { Queue, queueManager } from '../classes/queue';
 import { embeds } from '../embeds';
-import { player } from './play';
+import { client } from '../index';
 import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core';
 
 export async function queueCommand(interaction: ChatInputCommandInteraction) {
+	const player = client?.player;
 	await interaction.deferReply();
 	if (typeof player === 'undefined') return interaction.followUp(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(interaction.guildId!) as Queue;

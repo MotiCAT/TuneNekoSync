@@ -1,9 +1,10 @@
 import { embeds } from '../embeds';
-import { player } from './play';
+import { client } from '../index';
 import { AudioPlayerStatus } from '@discordjs/voice';
 import { Message } from 'discord.js';
 
 export async function pauseCommand(message: Message) {
+	const player = client?.player;
 	if (typeof player === 'undefined') return message.reply(embeds.videoNotPlaying);
 
 	if (player.player.state.status === AudioPlayerStatus.Playing) {

@@ -1,9 +1,10 @@
 import { embeds } from '../embeds';
-import { player } from './play';
+import { client } from '../index';
 import { AudioPlayerStatus } from '@discordjs/voice';
 import { ChatInputCommandInteraction } from 'discord.js';
 
 export async function pauseCommand(interaction: ChatInputCommandInteraction) {
+	const player = client?.player;
 	if (typeof player === 'undefined') return interaction.reply(embeds.videoNotPlaying);
 
 	if (player.player.state.status === AudioPlayerStatus.Playing) {

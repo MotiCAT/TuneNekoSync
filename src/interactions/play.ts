@@ -1,14 +1,14 @@
 import { YTPlayer } from '../classes/player';
 import { Queue, queueManager } from '../classes/queue';
 import { embeds } from '../embeds';
+import { client } from '../index';
 import { ChannelType, VoiceBasedChannel, ChatInputCommandInteraction, GuildMember } from 'discord.js';
 import ytdl from 'ytdl-core';
 
-export let player: YTPlayer | undefined;
-
-export let url: string;
+let url: string;
 
 export async function playCommand(interaction: ChatInputCommandInteraction) {
+	let player = client?.player;
 	if (typeof queueManager.getQueue(interaction.guild?.id as string) === 'undefined') {
 		queueManager.setQueue(interaction.guild?.id as string, new Queue());
 	}
@@ -16,11 +16,12 @@ export async function playCommand(interaction: ChatInputCommandInteraction) {
 	if (!interaction.channel) return;
 	if (!(interaction.member instanceof GuildMember)) return;
 	if (typeof player === 'undefined') {
-		player = new YTPlayer(
+		client.player = new YTPlayer(
 			interaction.guild?.id as string,
 			interaction.member?.voice.channel as VoiceBasedChannel,
 			interaction.channel?.id
 		);
+		player = client.player;
 	}
 	url = interaction.options.getString('url') as string;
 	const channel = interaction.member?.voice.channel;
