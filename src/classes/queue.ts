@@ -13,8 +13,8 @@ export class Queue {
 		return this._store;
 	}
 
-	public get currentSong(): string | undefined {
-		return this._store[0] ?? undefined;
+	public get currentSong(): string {
+		return this._store[0];
 	}
 
 	public get length(): number {

@@ -10,7 +10,6 @@ export async function queueCommand(interaction: ChatInputCommandInteraction) {
 	await interaction.deferReply();
 	if (typeof player === 'undefined') return interaction.followUp(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(interaction.guildId!) as Queue;
-	if (!queue.length) return interaction.followUp(embeds.queueEmpty);
 
 	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();
 	for (let i = 0; i < queue.length; i++) {

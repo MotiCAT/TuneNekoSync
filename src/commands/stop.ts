@@ -1,6 +1,6 @@
-import { client } from '../index';
 import { queueManager } from '../classes/queue';
 import { embeds } from '../embeds';
+import { client } from '../index';
 import { Message } from 'discord.js';
 
 export async function stopCommand(message: Message): Promise<void> {

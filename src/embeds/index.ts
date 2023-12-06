@@ -6,14 +6,16 @@ export const embeds = {
 		.setTitle('Help')
 		.setColor('Blue')
 		.addFields(
+			{ name: 'help', value: 'このメッセージを表示します。' },
 			{ name: 'play', value: '音楽を再生します。' },
 			{ name: 'queue', value: 'キューを表示します。' },
 			{ name: 'loop', value: 'ループをオン/オフにします。' },
 			{ name: 'skip', value: '現在の曲をスキップします。' },
 			{ name: 'stop', value: '再生を停止します。' },
-			{ name: 'pause', value: '再生を一時停止します。' },
+			{ name: 'pause', value: '再生を一時停止/再開します。' },
 			{ name: 'resume', value: '再生を再開します。' },
-			{ name: 'help', value: 'このメッセージを表示します。' }
+			{ name: 'nowplaying', value: '現在の曲を表示します。' },
+			{ name: 'volume', value: '音量を変更します。'}
 		)
 		.build(),
 	videoNotPlaying: new Builder()
@@ -30,6 +32,7 @@ export const embeds = {
 		.setColor('Yellow')
 		.build(),
 	videoStopped: new Builder().addFields({ name: 'Success', value: '動画を停止しました。' }).setColor('Green').build(),
+	videoNext: new Builder().addFields({ name: 'Success', value: '次の動画を再生します。' }).setColor('Green').build(),
 	noUrl: new Builder().addFields({ name: 'Error', value: 'URLを指定してください。' }).setColor('Red').build(),
 	invaildUrl: new Builder()
 		.addFields({ name: 'Error', value: '有効なURLを指定してください。' })
@@ -43,7 +46,6 @@ export const embeds = {
 		.addFields({ name: 'Error', value: 'ボイスチャンネルに既に参加しています。' })
 		.setColor('Red')
 		.build(),
-	queueEmpty: new Builder().addFields({ name: 'Error', value: 'キューが空です。' }).setColor('Red').build(),
 	unknownCommand: new Builder()
 		.addFields({ name: 'Error', value: '不明なコマンドかコマンドが指定されていません。' })
 		.setColor('Red')
