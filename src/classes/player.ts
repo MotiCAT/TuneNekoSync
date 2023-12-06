@@ -83,12 +83,8 @@ export class YTPlayer {
 		if (this.queue.loop === 'none') {
 			if (!this.queue.store.length) return;
 			else {
-				if (this.queue.store.length > 1) this.queue.removeSong(0);
-				if (this.queue.store.length === 1) {
-					this.play();
-					await this.fetchSongData();
-					return this.queue.removeSong(0);
-				}
+				if (this.queue.store.length >= 1) this.queue.removeSong(0);
+				if (!this.queue.store.length) return this.stop();
 				await this.fetchSongData();
 				return this.play();
 			}
