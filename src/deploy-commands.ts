@@ -30,7 +30,7 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('volume')
 		.setDescription('Change the volume')
-		.addIntegerOption((option) => option.setName('volume').setDescription('The volume to change to').setRequired(true)),
+		.addIntegerOption((option) => option.setName('volume').setDescription('The volume to change to')),
 	new SlashCommandBuilder().setName('nowplaying').setDescription('View the currently playing song'),
 	new SlashCommandBuilder().setName('help').setDescription('View the help menu')
 ];
@@ -41,7 +41,7 @@ const rest = new REST().setToken(process.env.TOKEN!);
 	try {
 		console.log('Started refreshing application (/) commands.');
 
-		await rest.put(Routes.applicationCommands('1138100173759856701'), { body: commands });
+		await rest.put(Routes.applicationCommands(process.env.BOTUSERID!), { body: commands });
 
 		console.log('Successfully reloaded application (/) commands.');
 	} catch (error) {
