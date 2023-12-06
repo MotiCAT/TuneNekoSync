@@ -6,6 +6,7 @@ export async function onInteractionCreate(interaction: BaseInteraction): Promise
 	if (!interaction.isChatInputCommand()) return;
 	if (!interaction.guild) {
 		interaction.reply({ content: 'This command can only be used in a server!', ephemeral: true });
+		return;
 	}
 	const commandName = interaction.commandName;
 	if (commandName === 'help') return interactions.help(interaction);

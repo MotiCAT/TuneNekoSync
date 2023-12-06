@@ -8,7 +8,7 @@ import ytdl from 'ytdl-core';
 export async function queueCommand(interaction: ChatInputCommandInteraction) {
 	const player = client?.player;
 	await interaction.deferReply();
-	if (typeof player === 'undefined') return interaction.followUp(embeds.videoNotPlaying);
+	if (!player) return interaction.followUp(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(interaction.guildId!) as Queue;
 
 	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();

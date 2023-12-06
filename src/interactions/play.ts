@@ -9,13 +9,13 @@ let url: string;
 
 export async function playCommand(interaction: ChatInputCommandInteraction) {
 	let player = client?.player;
-	if (typeof queueManager.getQueue(interaction.guild?.id as string) === 'undefined') {
+	if (!queueManager.getQueue(interaction.guild?.id as string)) {
 		queueManager.setQueue(interaction.guild?.id as string, new Queue());
 	}
 	const queue = queueManager.getQueue(interaction.guild?.id as string) as Queue;
 	if (!interaction.channel) return;
 	if (!(interaction.member instanceof GuildMember)) return;
-	if (typeof player === 'undefined') {
+	if (!player) {
 		client.player = new YTPlayer(
 			interaction.guild?.id as string,
 			interaction.member?.voice.channel as VoiceBasedChannel,

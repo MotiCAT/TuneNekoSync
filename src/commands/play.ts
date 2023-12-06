@@ -9,11 +9,11 @@ let url: string;
 
 export async function playCommand(message: Message) {
 	let player = client?.player;
-	if (typeof queueManager.getQueue(message.guild?.id as string) === 'undefined') {
+	if (!queueManager.getQueue(message.guild?.id as string)) {
 		queueManager.setQueue(message.guild?.id as string, new Queue());
 	}
 	const queue = queueManager.getQueue(message.guild?.id as string) as Queue;
-	if (typeof player === 'undefined') {
+	if (!player) {
 		client.player = new YTPlayer(
 			message.guild?.id as string,
 			message.member?.voice.channel as VoiceBasedChannel,

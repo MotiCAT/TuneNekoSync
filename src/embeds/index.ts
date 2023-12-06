@@ -15,7 +15,7 @@ export const embeds = {
 			{ name: 'pause', value: '再生を一時停止/再開します。' },
 			{ name: 'resume', value: '再生を再開します。' },
 			{ name: 'nowplaying', value: '現在の曲を表示します。' },
-			{ name: 'volume', value: '音量を変更します。'}
+			{ name: 'volume', value: '音量を変更します。' }
 		)
 		.build(),
 	videoNotPlaying: new Builder()

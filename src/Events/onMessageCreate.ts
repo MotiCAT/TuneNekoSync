@@ -8,7 +8,10 @@ export async function onMessageCreate(message: Message): Promise<Awaitable<void>
 	if (message.author.bot || !message.content.startsWith(prefix) || !message.guild) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/) as string[];
 	const commandName = args.shift()?.toLowerCase();
-	if (commandName === 'help' || commandName === 'h') return commands.help(message);
+	if (commandName === 'help' || commandName === 'h') {
+		commands.help(message);
+		return;
+	}
 	const channel = message.member?.voice.channel;
 	if (!channel) {
 		message.reply(embeds.voiceChannelJoin);

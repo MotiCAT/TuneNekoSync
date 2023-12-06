@@ -7,7 +7,7 @@ import ytdl from 'ytdl-core';
 
 export async function queueCommand(message: Message) {
 	const player = client?.player;
-	if (typeof player === 'undefined') return message.reply(embeds.videoNotPlaying);
+	if (!player) return message.reply(embeds.videoNotPlaying);
 	const queue = queueManager.getQueue(message.guildId!) as Queue;
 
 	const embed = new embeds.embed().setTitle('Queue').setColor('Blue').setTimestamp();

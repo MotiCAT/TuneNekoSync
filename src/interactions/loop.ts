@@ -5,7 +5,7 @@ import { ChatInputCommandInteraction } from 'discord.js';
 
 export async function loopCommand(interaction: ChatInputCommandInteraction) {
 	const player = client?.player;
-	if (typeof player === 'undefined') return interaction.reply(embeds.videoNotPlaying);
+	if (!player) return interaction.reply(embeds.videoNotPlaying);
 	const queue = queueManager.queues.get(interaction.guildId!) as Queue;
 	const settings = interaction.options.getString('mode') as string;
 	if (!settings) {

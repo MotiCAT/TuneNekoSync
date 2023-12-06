@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
 
 export async function loopCommand(message: Message, args: string[]) {
 	const player = client?.player;
-	if (typeof player === 'undefined') return message.reply(embeds.videoNotPlaying);
+	if (!player) return message.reply(embeds.videoNotPlaying);
 	const queue = queueManager.queues.get(message.guildId!) as Queue;
 	args = args.filter((arg) => arg !== '');
 	if (args.length === 0) {
