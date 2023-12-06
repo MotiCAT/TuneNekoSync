@@ -68,6 +68,7 @@ export class YTPlayer {
 	public stop(): void {
 		this.connection.destroy();
 		queueManager.deleteQueue(this.serverId);
+		client.player = undefined;
 	}
 
 	public skip(): void {
