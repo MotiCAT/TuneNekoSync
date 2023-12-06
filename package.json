@@ -11,7 +11,8 @@
 		"start": "npm run compile && node build/index.js",
 		"compile": "tsc -p .",
 		"format": "prettier . --write",
-		"lint": "npm run format && eslint ."
+		"lint": "npm run format && eslint .",
+		"deploy:slash": "npm run compile && node ./build/deploy-commands.js"
 	},
 	"author": {
 		"name": "MotiCAT",
