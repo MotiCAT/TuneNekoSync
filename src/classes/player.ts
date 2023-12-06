@@ -52,7 +52,7 @@ export class YTPlayer {
 			inputType: StreamType.WebmOpus,
 			inlineVolume: true
 		});
-		this.resource.volume?.setVolume(0.1);
+		this.resource.volume?.setVolume(this.volume);
 		this.connection.subscribe(this.player);
 		this.player.play(this.resource);
 	}
@@ -76,6 +76,7 @@ export class YTPlayer {
 
 	public changeVolume(volume: number): void {
 		if (!this.resource) return;
+		this.volume = volume;
 		this.resource.volume?.setVolume(volume / 10);
 	}
 
