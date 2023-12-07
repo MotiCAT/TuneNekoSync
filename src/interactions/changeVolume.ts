@@ -7,7 +7,7 @@ export async function changeVolumeCommand(interaction: ChatInputCommandInteracti
 	if (!player) return interaction.reply(embeds.videoNotPlaying);
 
 	const vol = interaction.options.getInteger('volume');
-	if (!vol) return interaction.reply({ content: `現在の音量は${player.volume}です。` });
+	if (!vol) return interaction.reply({ content: `現在の音量は${player.volume * 10}です。` });
 	if (vol >= 100) {
 		player.changeVolume(100 / 10);
 		return interaction.reply({ content: 'ボリュームを最大に設定しました。' });
