@@ -29,7 +29,7 @@ export class YTPlayer {
 		});
 		this.player = createAudioPlayer();
 		this.queue = queueManager.getQueue(serverId) as Queue;
-		this.volume = 100 / 10;
+		this.volume = 0.1;
 		this.player
 			.on('subscribe', () => {
 				this.isPlaying = true;
