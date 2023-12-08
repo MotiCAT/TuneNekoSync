@@ -6,6 +6,7 @@ import { pauseCommand } from './pause';
 import { playCommand } from './play';
 import { queueCommand } from './queue';
 import { resumeCommand } from './resume';
+import { searchCommand } from './search';
 import { skipCommand } from './skip';
 import { stopCommand } from './stop';
 
@@ -19,5 +20,6 @@ export const commands = {
 	queue: queueCommand,
 	resume: resumeCommand,
 	skip: skipCommand,
-	stop: stopCommand
+	stop: stopCommand,
+	search: searchCommand
 };

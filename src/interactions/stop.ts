@@ -8,9 +8,7 @@ export async function stopCommand(interaction: ChatInputCommandInteraction): Pro
 		interaction.guild.members.me.voice.disconnect();
 		client.player = undefined;
 		interaction.reply(embeds.videoStopped);
-	} else {
-		interaction.reply(embeds.videoNotPlaying);
-	}
+	} else interaction.reply(embeds.videoNotPlaying);
 
 	queueManager.queues.delete(interaction.guildId!);
 }

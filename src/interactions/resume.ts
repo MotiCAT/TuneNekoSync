@@ -11,7 +11,5 @@ export async function resumeCommand(interaction: ChatInputCommandInteraction) {
 		interaction.reply(embeds.videoResumed);
 	} else if (player.player.state.status === AudioPlayerStatus.Playing) {
 		interaction.reply(embeds.videoNotPaused);
-	} else {
-		interaction.reply(embeds.videoNotPlaying);
-	}
+	} else interaction.reply(embeds.videoNotPlaying);
 }

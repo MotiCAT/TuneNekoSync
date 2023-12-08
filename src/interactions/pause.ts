@@ -5,7 +5,7 @@ import { ChatInputCommandInteraction } from 'discord.js';
 
 export async function pauseCommand(interaction: ChatInputCommandInteraction) {
 	const player = client?.player;
-	if (typeof player === 'undefined') return interaction.reply(embeds.videoNotPlaying);
+	if (!player) return interaction.reply(embeds.videoNotPlaying);
 
 	if (player.player.state.status === AudioPlayerStatus.Playing) {
 		player.pause();
@@ -13,7 +13,5 @@ export async function pauseCommand(interaction: ChatInputCommandInteraction) {
 	} else if (player.player.state.status === AudioPlayerStatus.Paused) {
 		player.resume();
 		interaction.reply(embeds.videoResumed);
-	} else {
-		interaction.reply(embeds.videoNotPlaying);
-	}
+	} else interaction.reply(embeds.videoNotPlaying);
 }

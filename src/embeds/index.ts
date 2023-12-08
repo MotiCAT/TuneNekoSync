@@ -15,7 +15,7 @@ export const embeds = {
 			{ name: 'pause', value: '再生を一時停止/再開します。' },
 			{ name: 'resume', value: '再生を再開します。' },
 			{ name: 'nowplaying', value: '現在の曲を表示します。' },
-			{ name: 'volume', value: '音量を変更します。'}
+			{ name: 'volume', value: '音量を変更します。' }
 		)
 		.build(),
 	videoNotPlaying: new Builder()
@@ -36,6 +36,10 @@ export const embeds = {
 	noUrl: new Builder().addFields({ name: 'Error', value: 'URLを指定してください。' }).setColor('Red').build(),
 	invaildUrl: new Builder()
 		.addFields({ name: 'Error', value: '有効なURLを指定してください。' })
+		.setColor('Red')
+		.build(),
+	noResult: new Builder()
+		.addFields({ name: 'Error', value: '検索結果が見つかりませんでした。' })
 		.setColor('Red')
 		.build(),
 	voiceChannnelPermission: new Builder()

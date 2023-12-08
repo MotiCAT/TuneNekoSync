@@ -1,4 +1,5 @@
 import { changeVolumeCommand } from './changeVolume';
+import { searchPlayCommand } from './handleplay';
 import { helpCommand } from './help';
 import { loopCommand } from './loop';
 import { nowplayingCommand } from './nowplaying';
@@ -6,6 +7,7 @@ import { pauseCommand } from './pause';
 import { playCommand } from './play';
 import { queueCommand } from './queue';
 import { resumeCommand } from './resume';
+import { searchCommand } from './search';
 import { skipCommand } from './skip';
 import { stopCommand } from './stop';
 
@@ -19,5 +21,7 @@ export const interactions = {
 	queue: queueCommand,
 	resume: resumeCommand,
 	skip: skipCommand,
-	stop: stopCommand
+	stop: stopCommand,
+	search: searchCommand,
+	searchplay: searchPlayCommand
 };
