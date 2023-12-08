@@ -8,11 +8,13 @@
 	},
 	"scripts": {
 		"test": "ts-node src/index.ts",
-		"start": "npm run compile && node build/index.js",
+		"start": "npm run deploy:slash && node build/index.js",
 		"compile": "tsc -p .",
 		"format": "prettier . --write",
 		"lint": "npm run format && eslint .",
-		"deploy:slash": "npm run compile && node ./build/deploy-commands.js"
+		"deploy:slash": "npm run compile && node ./build/deploy-commands.js",
+		"clean:node": "rimraf -- node_modules",
+		"clean:build": "rimraf -- build"
 	},
 	"author": {
 		"name": "MotiCAT",
