@@ -69,6 +69,9 @@ export async function onMessageCreate(message: Message): Promise<Awaitable<void>
 		case 'current':
 			commands.nowplaying(message);
 			break;
+		case 'search':
+			commands.search(message);
+			break;
 		default:
 			message.reply(embeds.unknownCommand);
 			break;

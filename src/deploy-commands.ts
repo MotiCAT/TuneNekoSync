@@ -8,6 +8,10 @@ const commands = [
 		.setName('play')
 		.setDescription('Play a song')
 		.addStringOption((option) => option.setName('url').setDescription('The song to play').setRequired(true)),
+	new SlashCommandBuilder()
+		.setName('search')
+		.setDescription('Search for a song')
+		.addStringOption((option) => option.setName('query').setDescription('Enter search words').setRequired(true)),
 	new SlashCommandBuilder().setName('pause').setDescription('Pause the current song'),
 	new SlashCommandBuilder().setName('resume').setDescription('Resume the current song'),
 	new SlashCommandBuilder().setName('skip').setDescription('Skip the current song'),

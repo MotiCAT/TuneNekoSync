@@ -3,6 +3,10 @@ import { interactions } from '../interactions';
 import { BaseInteraction, Awaitable, ChannelType, GuildMember } from 'discord.js';
 
 export async function onInteractionCreate(interaction: BaseInteraction): Promise<Awaitable<void>> {
+	if (interaction.isStringSelectMenu()) {
+		interactions.searchplay(interaction);
+		return;
+	}
 	if (!interaction.isChatInputCommand()) return;
 	if (!interaction.guild) {
 		interaction.reply({ content: 'This command can only be used in a server!', ephemeral: true });
@@ -53,6 +57,9 @@ export async function onInteractionCreate(interaction: BaseInteraction): Promise
 			break;
 		case 'nowplaying':
 			interactions.nowplaying(interaction);
+			break;
+		case 'search':
+			interactions.search(interaction);
 			break;
 		default:
 			interaction.reply(embeds.unknownCommand);

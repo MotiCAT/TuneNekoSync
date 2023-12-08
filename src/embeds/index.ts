@@ -38,6 +38,10 @@ export const embeds = {
 		.addFields({ name: 'Error', value: '有効なURLを指定してください。' })
 		.setColor('Red')
 		.build(),
+	noResult: new Builder()
+		.addFields({ name: 'Error', value: '検索結果が見つかりませんでした。' })
+		.setColor('Red')
+		.build(),
 	voiceChannnelPermission: new Builder()
 		.addFields({ name: 'Error', value: 'ボイスチャンネルに参加する権限がありません。' })
 		.setColor('Red')
