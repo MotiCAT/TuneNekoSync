@@ -1,5 +1,6 @@
 import { format_count, seconds_to_time } from '../Utils/NumberUtil';
 import { Builder } from './Builder';
+import { client } from '../index';
 import ytdl from 'ytdl-core';
 
 export function songResolver(info: ytdl.videoInfo, requestedBy?: string, requestedByAvatar?: string) {
@@ -19,6 +20,7 @@ export function songResolver(info: ytdl.videoInfo, requestedBy?: string, request
 export async function getSongInfo(url: string) {
 	const info = await ytdl.getInfo(url);
 	const song = songResolver(info);
+	const currentDuration = seconds_to_time(Math.round(Number(client.player?.resource?.playbackDuration) / 1000));
 
 	const embed = new Builder()
 		.setTitle(song.title)
@@ -27,7 +29,8 @@ export async function getSongInfo(url: string) {
 		.addFields(
 			{ name: '投稿者', value: `[${song.author}](${song.authorUrl})` },
 			{ name: '再生時間', value: song.duration, inline: true },
-			{ name: '再生回数', value: song.views, inline: true }
+			{ name: '再生回数', value: song.views, inline: true },
+			{ name: '現在の位置', value: currentDuration  , inline: false },
 		)
 		.setColor('Green');
 
