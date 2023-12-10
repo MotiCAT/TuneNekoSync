@@ -13,13 +13,17 @@ export async function searchCommand(message: Message) {
 		.setCustomId('search')
 		.setPlaceholder('Select a video')
 		.addOptions(
-			videos.map((video, index) =>
-				new StringSelectMenuOptionBuilder()
+			videos.map((video, index) => {
+				let label = `${index + 1}. ${video.title}`;
+				if (label.length > 100) {
+					label = label.substring(0, 100);
+				}
+				return new StringSelectMenuOptionBuilder()
 					.setLabel(`${index + 1}. ${video.title}`)
 					.setValue(video.url)
 					.setDescription(`${video.channel?.name} | ${video.durationFormatted}`)
-					.setEmoji('🎵')
-			)
+					.setEmoji('🎵');
+			})
 		);
 
 	const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(menu);
