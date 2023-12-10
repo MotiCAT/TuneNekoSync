@@ -17,7 +17,7 @@ export async function searchCommand(message: Message) {
 				new StringSelectMenuOptionBuilder()
 					.setLabel(`${index + 1}. ${video.title}`)
 					.setValue(video.url)
-					.setDescription(String(video.durationFormatted))
+					.setDescription(`${video.channel?.name} | ${video.durationFormatted}`)
 					.setEmoji('🎵')
 			)
 		);

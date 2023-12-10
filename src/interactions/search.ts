@@ -23,7 +23,7 @@ export async function searchCommand(interaction: ChatInputCommandInteraction) {
 				new StringSelectMenuOptionBuilder()
 					.setLabel(`${index + 1}. ${video.title}`)
 					.setValue(video.url)
-					.setDescription(String(video.durationFormatted))
+					.setDescription(`${video.channel?.name} | ${video.durationFormatted}`)
 					.setEmoji('🎵')
 			)
 		);
