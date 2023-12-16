@@ -61,5 +61,35 @@ export const embeds = {
 	commandNotFound: new Builder()
 		.addFields({ name: 'Error', value: 'コマンドが見つかりませんでした。' })
 		.setColor('Red')
+		.build(),
+	helpMusic: new Builder()
+		.setTitle('Help')
+		.setColor('Blue')
+		.addFields(
+			{ name: 'play', value: '音楽を再生します。\n例: `ts!play [URL]`' },
+			{ name: 'queue', value: 'キューを表示します。' },
+			{
+				name: 'loop',
+				value: 'ループを有効化/無効化します。\n例: `ts!loop [track/queue/off]`\n`track`で一曲だけ,`queue`でキュー内の曲'
+			},
+			{ name: 'skip', value: '現在の曲をスキップします。' },
+			{ name: 'stop', value: '再生を停止します。' },
+			{ name: 'pause', value: '再生を一時停止/再開します。' },
+			{ name: 'resume', value: '再生を再開します。' }
+		)
+		.build(),
+	helpMisc: new Builder()
+		.setTitle('Help')
+		.setColor('Blue')
+		.addFields(
+			{ name: 'help', value: 'このメッセージを表示します。' },
+			{ name: 'nowplaying', value: '再生中の曲の情報を表示します。' },
+			{ name: 'volume', value: '音量を変更します。\n 例: `ts!volume [音量]`' }
+		)
+		.build(),
+	helpSearch: new Builder()
+		.setTitle('Help')
+		.setColor('Blue')
+		.addFields({ name: 'search', value: '動画を検索します。\n例: `ts!search [キーワード]`' })
 		.build()
 };

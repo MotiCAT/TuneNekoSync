@@ -4,8 +4,17 @@ import { BaseInteraction, Awaitable, ChannelType, GuildMember } from 'discord.js
 
 export async function onInteractionCreate(interaction: BaseInteraction): Promise<Awaitable<void>> {
 	if (interaction.isStringSelectMenu()) {
-		interactions.searchplay(interaction);
-		return;
+		switch (interaction.customId) {
+			case 'help':
+				interactions.helpmenu(interaction);
+				break;
+			case 'search':
+				interactions.searchplay(interaction);
+				break;
+			default:
+				interaction.reply(embeds.unknownCommand);
+				break;
+		}
 	}
 	if (!interaction.isChatInputCommand()) return;
 	if (!interaction.guild) {

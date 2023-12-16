@@ -1,4 +1,5 @@
 import { changeVolumeCommand } from './changeVolume';
+import { helpmenuCommand } from './handlehelp';
 import { searchPlayCommand } from './handleplay';
 import { helpCommand } from './help';
 import { loopCommand } from './loop';
@@ -23,5 +24,6 @@ export const interactions = {
 	skip: skipCommand,
 	stop: stopCommand,
 	search: searchCommand,
-	searchplay: searchPlayCommand
+	searchplay: searchPlayCommand,
+	helpmenu: helpmenuCommand
 };
