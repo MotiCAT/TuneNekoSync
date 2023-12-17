@@ -22,7 +22,10 @@ export async function onInteractionCreate(interaction: BaseInteraction): Promise
 		return;
 	}
 	const commandName = interaction.commandName;
-	if (commandName === 'help') return interactions.help(interaction);
+	if (commandName === 'help') {
+		interactions.help(interaction);
+		return;
+	}
 	if (!(interaction.member instanceof GuildMember)) return;
 	const channel = interaction.member?.voice.channel;
 	if (!channel) {
